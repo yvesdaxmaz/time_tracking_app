@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import EditableTimerList from "./components/EditableTimerList";
 import ToggleableTimerForm from "./components/ToggleableTimerForm";
-import 'semantic-ui/dist/semantic.min.css';
 
 class TimersDashboard extends Component {
     render() {
