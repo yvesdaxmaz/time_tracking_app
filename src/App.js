@@ -24,8 +24,8 @@ class TimersDashboard extends Component {
         ],
     };
 
-    handleEditFormSubmit = () => {
-
+    handleEditFormSubmit = (attrs) => {
+        this.updateTimer(attrs);
     };
 
     handleCreateFormSubmit = (timer) => {
@@ -39,12 +39,27 @@ class TimersDashboard extends Component {
         });
     };
 
+    updateTimer = (attrs) => {
+        this.setState({
+            timers: this.state.timers.map((timer) => {
+                if(timer.id === attrs.id) {
+                    return Object.assign({}, timer, {
+                        title: attrs.title,
+                        project: attrs.project,
+                    });
+                } else {
+                    return timer;
+                }
+            })
+        });
+    };
+
     render() {
         return (
             <div className="ui three column centered grid">
                 <div className="column">
-                    <EditableTimerList timers={this.state.timers} />
-                    <ToggleableTimerForm isOpen={true} onFormSubmit={this.handleCreateFormSubmit}/>
+                    <EditableTimerList timers={this.state.timers} onFormSubmit={this.handleEditFormSubmit} />
+                    <ToggleableTimerForm isOpen={true} onFormSubmit={this.handleCreateFormSubmit} />
                 </div>
             </div>
         )
