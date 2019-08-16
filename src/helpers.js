@@ -1,3 +1,4 @@
+import uuid from "uuid"; 
 const newTimer = (attrs = {}) => {
 	const timer = {
 		title: attrs.title || 'Timer',
