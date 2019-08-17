@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import TimerActionButton from "./TimerActionButton";
 import helpers from "../helpers";
 
 class Timer extends Component {
@@ -7,8 +8,25 @@ class Timer extends Component {
         this.props.onTrashClick(this.props.id);
     };
 
+    componentDidMount() {
+        this.forceUpdateInterval = setInterval(() => this.forceUpdate(), 50);
+    };
+
+    componentWillUnmount() {
+        clearInterval(this.forceUpdateInterval);
+        console.log('component unmount');
+    };
+
+    handleStartClick = () => {
+        this.props.onStartClick(this.props.id);
+    };
+
+    handleStopClick = () => {
+        this.props.onStopClick(this.props.id);
+    };
+
     render() {
-        const elapsedString = helpers.renderElapsedString(this.props.elapsed);
+        const elapsedString = helpers.renderElapsedString(this.props.elapsed, this.props.runningSince);
         return (
             <div className="ui centered card">
                 <div className="content">
@@ -31,7 +49,11 @@ class Timer extends Component {
                     </div>
                </div>
                 <div className="ui bottom attached blue basic button">
-                    Start
+                    <TimerActionButton
+                        timerIsRunning={!!this.props.runningSince}
+                        onStartClick={this.handleStartClick}
+                        onStopClick={this.handleStopClick}
+                        />
                 </div>
             </div>
         );
